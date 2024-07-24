@@ -3,7 +3,7 @@ import { model, Schema } from 'mongoose';
 const contactsShema = new Schema(
   {
     name: { type: String, reguired: true },
-    phoneNumber: { type: Number, required: true },
+    phoneNumber: { type: String, required: true },
     email: {
       type: String,
     },
@@ -18,10 +18,10 @@ const contactsShema = new Schema(
       default: 'personal',
     },
   },
-  { timeseries: true },
+  // { timeseries: true },
 );
 
 export const Contact = model(
-  'contact',
+  'contacts',
   contactsShema,
 );
