@@ -4,31 +4,31 @@ const contactsShema = new Schema(
   {
     name: {
       type: String,
-      required: [true, 'Name is required'],
+      required: true, 
     },
     phoneNumber: {
       type: String,
-      required: [
-        true,
-        'Phone number is required',
-      ],
+      required: true,
     },
     email: {
       type: String,
-      required: [true, 'Email is required'],
+      required: false,
     },
     isFavourite: {
       type: Boolean,
-      required: [true, 'IsFavourite is required'],
+      required: false,
     },
     contactType: {
       type: String,
       enum: ['work', 'home', 'personal'],
-      required: [true, 'ContactType is required'],
+      required: true,
       default: 'personal',
     },
   },
-  { versionKey: false, timestamps: true },
+  {
+    versionKey: false,
+    timestamps: true,
+  },
 );
 
 export const Contact = model('contacts', contactsShema);
