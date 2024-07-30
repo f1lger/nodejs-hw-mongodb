@@ -2,26 +2,33 @@ import { model, Schema } from 'mongoose';
 
 const contactsShema = new Schema(
   {
-    name: { type: String, reguired: true },
-    phoneNumber: { type: String, required: true },
+    name: {
+      type: String,
+      required: [true, 'Name is required'],
+    },
+    phoneNumber: {
+      type: String,
+      required: [
+        true,
+        'Phone number is required',
+      ],
+    },
     email: {
       type: String,
+      required: [true, 'Email is required'],
     },
     isFavourite: {
       type: Boolean,
-      default: false,
+      required: [true, 'IsFavourite is required'],
     },
     contactType: {
       type: String,
       enum: ['work', 'home', 'personal'],
-      reguired: true,
+      required: [true, 'ContactType is required'],
       default: 'personal',
     },
   },
-  // { timeseries: true },
+  { versionKey: false, timestamps: true },
 );
 
-export const Contact = model(
-  'contacts',
-  contactsShema,
-);
+export const Contact = model('contacts', contactsShema);

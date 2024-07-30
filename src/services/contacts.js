@@ -5,3 +5,17 @@ export const getAllContacts = () =>
 
 export const getContactById = (id) =>
   Contact.findById(id);
+
+export const createContact = (payload) =>
+  Contact.create(payload);
+
+export const updateContact = (
+  contactId,
+  payload,
+) =>
+  Contact.findByIdAndUpdate(contactId, payload, {
+    new: true,
+  });
+
+export const deleteContact = (id) =>
+  Contact.findByIdAndDelete(id);
