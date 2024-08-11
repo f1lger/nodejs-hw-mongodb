@@ -4,7 +4,7 @@ const contactsShema = new Schema(
   {
     name: {
       type: String,
-      required: true, 
+      required: true,
     },
     phoneNumber: {
       type: String,
@@ -31,4 +31,7 @@ const contactsShema = new Schema(
   },
 );
 
-export const Contact = model('contacts', contactsShema);
+export const Contact = model(
+  'contacts',
+  contactsShema,
+);
