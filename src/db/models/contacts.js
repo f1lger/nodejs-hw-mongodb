@@ -24,6 +24,7 @@ const contactsShema = new Schema(
       required: true,
       default: 'personal',
     },
+    parentId: { type: Schema.ObjectId, required: true },
   },
   {
     versionKey: false,
@@ -31,7 +32,4 @@ const contactsShema = new Schema(
   },
 );
 
-export const Contact = model(
-  'contacts',
-  contactsShema,
-);
+export const Contact = model('contacts', contactsShema);
