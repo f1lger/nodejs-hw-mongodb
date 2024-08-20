@@ -11,7 +11,7 @@ export const getAllContacts = async ({
 }) => {
   const skip = perPage * (page - 1);
 
-  const contactsQuery = Contact.find();
+  const contactsQuery = Contact.find({});
 
   if (filter.contactType) {
     contactsQuery.where('contactType').equals(filter.contactType);
@@ -19,18 +19,18 @@ export const getAllContacts = async ({
   if (typeof filter.isFavourite === 'boolean') {
     contactsQuery.where('isFavourite').equals(filter.isFavourite);
   }
+  if (typeof userId === 'object') {
+    contactsQuery.where('parentId').equals(userId);
+  }
 
-  contactsQuery.where('parentId').equals({ userId });
-  console.log(contactsQuery.where('parentId').equals(userId));
-
-  const contactsCount = await Contact.find()
-    .merge(contactsQuery)
-    .countDocuments();
   const contacts = await contactsQuery
     .skip(skip)
     .limit(perPage)
     .sort({ [sortBy]: sortOrder })
     .exec();
+  const contactsCount = await Contact.find()
+    .merge(contactsQuery)
+    .countDocuments();
 
   const paginationIndormation = createPaginationInformation(
     page,
