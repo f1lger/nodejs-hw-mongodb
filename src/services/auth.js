@@ -69,8 +69,4 @@ export const refreshSesion = async (userId) => {
     userId,
     ...session,
   });
-  // await Session.create({
-  //   userId: user._Id,
-  //   ...createSession(),
-  // });
 };
