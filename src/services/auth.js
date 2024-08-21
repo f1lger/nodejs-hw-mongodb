@@ -63,6 +63,9 @@ export const deleteSession = (id) => Session.deleteOne({ userId: id });
 export const refreshSesion = async (userId) => {
   const session = createSession();
 
+  const user = await User.findById({ _id: userId });
+
+  if (!user) throw createHttpError(404, 'User not fourd');
   await deleteSession(userId);
 
   return await Session.create({
