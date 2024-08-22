@@ -53,4 +53,5 @@ export const createContact = (payload, userId) =>
 export const updateContact = ({ _id, userId }, payload) =>
   Contact.findOneAndUpdate({ _id, userId }, payload, { new: true });
 
-export const deleteContact = (id) => Contact.findByIdAndDelete(id);
+export const deleteContact = ({ _id, userId }) =>
+  Contact.findOneAndDelete({ _id, userId });
