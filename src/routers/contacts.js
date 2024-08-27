@@ -19,7 +19,7 @@ import { upload } from '../middlewares/upload.js';
 const contactsRouter = Router();
 
 contactsRouter.use('/:contactId', isValidId);
-contactsRouter.use(authenticate);
+contactsRouter.use('/', authenticate);
 
 contactsRouter.get('/', ctrlWrapper(getAllContactsController));
 

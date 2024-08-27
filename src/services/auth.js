@@ -2,7 +2,12 @@ import createHttpError from 'http-errors';
 import { User } from '../db/models/user.js';
 import bcrypt from 'bcrypt';
 import crypto from 'crypto';
-import { FIFTEEN_MINUTES, ONE_DAY, SMTP, TEMPLATES_DIR } from '../constant/index.js';
+import {
+  FIFTEEN_MINUTES,
+  ONE_DAY,
+  SMTP,
+  TEMPLATES_DIR,
+} from '../constant/index.js';
 import { Session } from '../db/models/session.js';
 import jwt from 'jsonwebtoken';
 import { env } from '../utils/env.js';
@@ -96,9 +101,9 @@ export const sendResetPassword = async (email) => {
       expiresIn: '5m',
     },
   );
-  
+
   const teamplateSourse = await fs.readFile(
-    path.join(TEMPLATES_DIR,  'reset-password-email.html'),
+    path.join(TEMPLATES_DIR, 'reset-password-email.html'),
   );
 
   const template = Handlebars.compile(teamplateSourse.toString());
