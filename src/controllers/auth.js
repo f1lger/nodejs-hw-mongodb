@@ -1,4 +1,3 @@
-// import { ONE_DAY } from '../constant/index.js';
 import createHttpError from 'http-errors';
 import {
   createUser,
@@ -6,6 +5,8 @@ import {
   loginUser,
   logoutUser,
   refreshSesion,
+  resetPassword,
+  sendResetPassword,
 } from '../services/auth.js';
 
 const setupSession = (res, session) => {
@@ -41,6 +42,8 @@ export const loginUserController = async (req, res, next) => {
 };
 
 export const logoutUserController = async (req, res, next) => {
+  const { userId } = req.cookies;
+  if (!userId) return next(createHttpError(401, 'User ID is incorrect'));
   await logoutUser({
     userId: req.cookies.userId,
     refreshToken: req.cookies.refreshToken,
@@ -53,16 +56,16 @@ export const logoutUserController = async (req, res, next) => {
 
 export const refreshTokenController = async (req, res, next) => {
   const { userId } = req.cookies;
-  const session = await findSession();
+  const session = await findSession(userId);
 
   if (!session) {
     throw createHttpError(401, 'Sesion not found');
   }
-  if (new Date() > session.refreshTokenValidUntil) {
+  if (new Date(Date.now()) > new Date(session.refreshTokenValidUntil)) {
     throw createHttpError(401, 'Refresh token is expired!');
   }
 
-  const newSession = await refreshSesion(userId); 
+  const newSession = await refreshSesion(userId);
 
   setupSession(res, newSession);
 
@@ -70,5 +73,24 @@ export const refreshTokenController = async (req, res, next) => {
     status: 200,
     message: 'Successfully refreshed a session!',
     data: { accessToken: newSession.accessToken },
+  });
+};
+
+export const sendResetPasswordEmailController = async (req, res, next) => {
+  await sendResetPassword(req.body.email);
+
+  res.status(200).json({
+    status: 200,
+    message: 'Reset password email has been successfully sent.',
+    data: {},
+  });
+};
+
+export const resetPasswordController = async (req, res, next) => {
+  await resetPassword(req.body);
+  res.status(200).json({
+    status: 200,
+    message: 'Password has been successfully reset.',
+    data: {},
   });
 };

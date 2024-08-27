@@ -21,6 +21,5 @@ export const initMongoDB = async () => {
       'Error while setting up mongo connection',
       e,
     );
-    throw e;
   }
 };
