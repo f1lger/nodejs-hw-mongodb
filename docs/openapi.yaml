@@ -11,6 +11,7 @@ tags:
     description: Operations with contacts.
 servers:
   - url: http://localhost:3000
+  - url: https://contacts-app-oxdx.onrender.com
 paths:
   /contacts:
     get: 
