@@ -22,7 +22,6 @@ export const getAllContacts = async ({
   filter,
   userId,
 }) => {
-
   const skip = perPage * (page - 1);
 
   const contactsQuery = Contact.find({});
@@ -63,8 +62,8 @@ export const getContactById = ({ _id, userId }) =>
 
 export const createContact = async (payload) => await Contact.create(payload);
 
-export const updateContact = (filter, payload) => {
-  return Contact.findOneAndUpdate(filter, payload, { new: true });
+export const updateContact = async (filter, payload) => {
+  return await Contact.findOneAndUpdate(filter, payload, {new: true});
 };
 
 export const deleteContact = (id) => Contact.findByIdAndDelete(id);

@@ -1,6 +1,7 @@
 import express from 'express';
 import pino from 'pino-http';
 import cors from 'cors';
+import { swagger } from './middlewares/swagger.js';
 import { env } from './utils/env.js';
 import { ENV_VARS, UPLOAD_DIR } from './constant/index.js';
 import { errorHandler } from './middlewares/errorHandler.js';
@@ -15,6 +16,7 @@ export const setupServer = () => {
   app.use(cors());
   app.use(cookieParser());
 
+  app.use('/api-docs', swagger());
   app.use(
     pino({
       transport: {
