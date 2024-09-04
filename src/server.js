@@ -12,11 +12,10 @@ import cookieParser from 'cookie-parser';
 export const setupServer = () => {
   const app = express();
 
-  app.use(express.json());
-  app.use(cors());
   app.use(cookieParser());
-
-  app.use('/api-docs', swagger());
+  app.use(express.json());
+  
+  app.use(cors());
   app.use(
     pino({
       transport: {
@@ -24,15 +23,16 @@ export const setupServer = () => {
       },
     }),
   );
-
+  
   app.get('/', (req, res, next) => {
     res.send('Hello world');
   });
-
+  
+  app.use('/api-docs', swagger());
   app.use('/upload', express.static(UPLOAD_DIR));
-
+  
   app.use(rootRouter);
-
+  
   app.use('*', notFoundHandler);
 
   app.use(errorHandler);
