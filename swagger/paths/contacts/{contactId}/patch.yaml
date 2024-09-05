@@ -47,6 +47,7 @@ requestBody:
             maxLength: 20
           photo:
             type: string
+            format: binary
 responses:
   '200':
     description: OK
